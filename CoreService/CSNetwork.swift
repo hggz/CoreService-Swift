@@ -10,7 +10,10 @@ import UIKit
 
 open class CSNetwork: NSObject {
     open static let main = CSNetwork()
-    func test() {
-        request(Router.destroyNetworkObject(networkObject: CSNetworkObject()))
+    
+    public var baseURL: String = ""
+    
+    open func setupNetwork(baseUrlString: String) {
+        baseURL = baseUrlString
     }
 }

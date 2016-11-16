@@ -8,13 +8,29 @@
 
 import UIKit
 
-class CSNetworkObject: NSObject {
+public typealias ResourceIdentifier = String
 
+public class CSNetworkObject: NSObject {
+    /// Root object location on server, minus base Url. IE: users or api/users
+    public var path: String = ""
+    /// Identifier to use when referring to this object. This is the primary key for the object on a server. IE: 12 or johnny_appleseed69
+    public var resourceID: ResourceIdentifier = ""
+    
+    /// Provides full url string path to resource on server.
+    ///
+    /// - returns: full url string path to resource on server.
+    public func resourcePath() -> String {
+        return "\(path)/\(resourceID)"
+    }
+    
+    /// Formats path to make sure its structured appropriately
+    private func formatPath() {
+        
+    }
 }
 
 extension CSNetworkObject: URLConvertible {
-    func asURL() throws -> URL {
-        let urlString = ""
-        return try urlString.asURL()
+    public func asURL() throws -> URL {
+        return try resourcePath().asURL()
     }
 }
