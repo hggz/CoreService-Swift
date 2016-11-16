@@ -11,9 +11,13 @@ import UIKit
 open class CSNetwork: NSObject {
     open static let main = CSNetwork()
     
-    public var baseURL: String = ""
+    private var baseURLString = ""
     
-    open func setupNetwork(baseUrlString: String) {
-        baseURL = baseUrlString
+    public var baseURL: String {
+        return baseURLString
+    }
+    
+    open func setupNetwork(urlString: String, port: String = "80") {
+        baseURLString = urlString
     }
 }

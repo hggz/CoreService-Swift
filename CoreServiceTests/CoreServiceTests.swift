@@ -11,6 +11,8 @@ import XCTest
 
 class CoreServiceTests: XCTestCase {
     
+    let testURLString = "https://meme.com"
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -22,6 +24,9 @@ class CoreServiceTests: XCTestCase {
     }
     
     func testExample() {
+        XCTAssert(CSNetwork.main.baseURL == "")
+        CSNetwork.main.setupNetwork(urlString: testURLString)
+        XCTAssert(CSNetwork.main.baseURL == testURLString)
     }
     
 }
