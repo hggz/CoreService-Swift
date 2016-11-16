@@ -6,11 +6,11 @@
 //  Copyright © 2016 Cat Bakery. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 public typealias ResourceIdentifier = String
 
-public class CSNetworkObject: NSObject {
+public class CSNetworkObject {
     /// Root object location on server, minus base Url. IE: users or api/users
     public var path: String = ""
     /// Identifier to use when referring to this object. This is the primary key for the object on a server. IE: 12 or johnny_appleseed69

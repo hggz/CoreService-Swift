@@ -2,11 +2,11 @@
 //  CoreService.h
 //  CoreService
 //
-//  Created by hugogonzalez on 11/12/16.
+//  Created by Hugo Gonzalez on 11/12/16.
 //  Copyright © 2016 Cat Bakery. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for CoreService.
 FOUNDATION_EXPORT double CoreServiceVersionNumber;
@@ -16,4 +16,4 @@ FOUNDATION_EXPORT const unsigned char CoreServiceVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <CoreService/PublicHeader.h>
 
-
+// Alamofire Version: 4.1.0
