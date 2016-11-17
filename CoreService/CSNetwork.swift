@@ -15,13 +15,13 @@ open class CSNetwork {
     open static let main = CSNetwork()
     
     /// Base url endpoint for all requests. Read-Only.
-    public var baseURL: String {
+    open var baseURL: String {
         return baseURLString
     }
     
     // MARK: - Private Properties
     
-    private var baseURLString = ""
+    fileprivate var baseURLString = ""
     
     // MARK: - Public Functions
     

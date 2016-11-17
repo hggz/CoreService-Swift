@@ -9,6 +9,15 @@
 import XCTest
 @testable import CoreService
 
+class TestModel: CSNetworkObject {
+    var numberOfMemes: Int = 69
+    
+    override var path: String {
+        get { return "meme" }
+        set { super.path = newValue }
+    }
+}
+
 class CoreServiceTests: XCTestCase {
     
     let testURLString = "https://meme.com"
@@ -27,6 +36,26 @@ class CoreServiceTests: XCTestCase {
         XCTAssert(CSNetwork.main.baseURL == "")
         CSNetwork.main.setupNetwork(urlString: testURLString)
         XCTAssert(CSNetwork.main.baseURL == testURLString)
+    }
+    
+    func testReflection() {
+        let objc = TestModel()
+        let refl = Mirror(reflecting: objc)
+        let superclassMirror = refl.superclassMirror!
+        print ("Number of super children: \(superclassMirror.children.count)")
+        for child in superclassMirror.children {
+            print ("Property: '\(child.label!)' Value: '\(child.value)'")
+//            objc.setValue("2pac", forKey: child.label!)
+            objc.setValuesForKeys([child.label!: "2pac"])
+        }
+        
+        print ("Number of children: \(refl.children.count)")
+        for child in refl.children {
+            print ("Property: '\(child.label!)' Value: '\(child.value)'")
+        }
+        
+        print ("Resource path: \(objc.resourcePath())")
+        XCTAssert(objc.resourceID == "2pac")
     }
     
 }
