@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CSRouter: URLRequestConvertible {
+enum CSRestRouter: URLRequestConvertible {
     case createNetworkObject(networkObject: CSNetworkObject, parameters: Parameters)
     case readNetworkObject(networkObject: CSNetworkObject)
     case updateNetworkObject(networkObject: CSNetworkObject, parameters: Parameters)

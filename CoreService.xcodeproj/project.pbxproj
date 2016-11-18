@@ -26,7 +26,7 @@
 		90BB313E1DDA879500034961 /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB312D1DDA879500034961 /* Timeline.swift */; };
 		90BB313F1DDA879500034961 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB312E1DDA879500034961 /* Validation.swift */; };
 		90BB31461DDBB3CE00034961 /* CSNetworkObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB31451DDBB3CE00034961 /* CSNetworkObject.swift */; };
-		90BB31491DDBC18000034961 /* CSRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB31481DDBC18000034961 /* CSRouter.swift */; };
+		90BB31491DDBC18000034961 /* CSRestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB31481DDBC18000034961 /* CSRestRouter.swift */; };
 		90DB9DCE1DD7EAE300C7046F /* CoreService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90DB9DC41DD7EAE300C7046F /* CoreService.framework */; };
 		90DB9DD31DD7EAE300C7046F /* CoreServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DB9DD21DD7EAE300C7046F /* CoreServiceTests.swift */; };
 		90DB9DD51DD7EAE300C7046F /* CoreService.h in Headers */ = {isa = PBXBuildFile; fileRef = 90DB9DC71DD7EAE300C7046F /* CoreService.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -62,7 +62,7 @@
 		90BB312D1DDA879500034961 /* Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
 		90BB312E1DDA879500034961 /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		90BB31451DDBB3CE00034961 /* CSNetworkObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNetworkObject.swift; sourceTree = "<group>"; };
-		90BB31481DDBC18000034961 /* CSRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSRouter.swift; sourceTree = "<group>"; };
+		90BB31481DDBC18000034961 /* CSRestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSRestRouter.swift; sourceTree = "<group>"; };
 		90DB9DC41DD7EAE300C7046F /* CoreService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90DB9DC71DD7EAE300C7046F /* CoreService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreService.h; sourceTree = "<group>"; };
 		90DB9DC81DD7EAE300C7046F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 				90DB9DC81DD7EAE300C7046F /* Info.plist */,
 				90BB311C1DDA5F5800034961 /* CSNetwork.swift */,
 				90BB31451DDBB3CE00034961 /* CSNetworkObject.swift */,
-				90BB31481DDBC18000034961 /* CSRouter.swift */,
+				90BB31481DDBC18000034961 /* CSRestRouter.swift */,
 			);
 			path = CoreService;
 			sourceTree = "<group>";
@@ -270,7 +270,7 @@
 				90BB31341DDA879500034961 /* Notifications.swift in Sources */,
 				90BB31351DDA879500034961 /* ParameterEncoding.swift in Sources */,
 				90BB31301DDA879500034961 /* Alamofire.swift in Sources */,
-				90BB31491DDBC18000034961 /* CSRouter.swift in Sources */,
+				90BB31491DDBC18000034961 /* CSRestRouter.swift in Sources */,
 				90BB313F1DDA879500034961 /* Validation.swift in Sources */,
 				90BB31371DDA879500034961 /* Response.swift in Sources */,
 				90BB313A1DDA879500034961 /* ServerTrustPolicy.swift in Sources */,

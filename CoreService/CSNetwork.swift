@@ -28,4 +28,25 @@ open class CSNetwork {
     open func setupNetwork(urlString: String, port: String = "80") {
         baseURLString = urlString
     }
+    
+    // REST requests
+    open func getObject() {
+    }
+    
+    open func createObject() {
+    }
+    
+    open func deleteObject() {
+    }
+    
+    open func updateObject() {
+    }
+    
+    // Universal Requests
+    
+    open func postRequest() {
+    }
+    
+    open func getRequest() {
+    }
 }
