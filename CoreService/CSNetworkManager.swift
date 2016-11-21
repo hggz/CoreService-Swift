@@ -63,14 +63,6 @@ open class CSNetworkManager {
         restRequest(requestType: .update, networkIdentifier: networkIdentifier, object: object, parameters: parameters, completion: completion)
     }
     
-    open func restRequest(requestType: CSNetworkRestRequest, networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters?, completion: CSRestCompletion) {
-        let networkConfig = networks[networkIdentifier]
-        guard networkConfig != nil else {
-            completion(.nonexistant, nil)
-            return
-        }
-    }
-    
     // Universal Requests
     
     open func postRequest() {
@@ -81,4 +73,15 @@ open class CSNetworkManager {
     
     open func downloadRequest() {
     }
+    
+    // MARK: - Private Functions
+    
+    fileprivate func restRequest(requestType: CSNetworkRestRequest, networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters?, completion: CSRestCompletion) {
+        let networkConfig = networks[networkIdentifier]
+        guard networkConfig != nil else {
+            completion(.nonexistant, nil)
+            return
+        }
+    }
+    
 }
