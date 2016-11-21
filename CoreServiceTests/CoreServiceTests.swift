@@ -32,12 +32,6 @@ class CoreServiceTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        XCTAssert(CSNetwork.main.baseURL == "")
-        CSNetwork.main.setupNetwork(urlString: testURLString)
-        XCTAssert(CSNetwork.main.baseURL == testURLString)
-    }
-    
     func testReflection() {
         let objc = TestModel()
         let refl = Mirror(reflecting: objc)

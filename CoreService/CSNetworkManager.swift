@@ -8,25 +8,26 @@
 
 import Foundation
 
-open class CSNetwork {
+public typealias CSNetwork = [String: CSNetworkConfig]
+
+open class CSNetworkManager {
     // MARK: - Public Properties
     
     /// Singleton primary instance
-    open static let main = CSNetwork()
-    
-    /// Base url endpoint for all requests. Read-Only.
-    open var baseURL: String {
-        return baseURLString
-    }
+    open static let main = CSNetworkManager()
     
     // MARK: - Private Properties
     
-    fileprivate var baseURLString = ""
+    fileprivate var networks: CSNetwork = [:]
     
     // MARK: - Public Functions
     
-    open func setupNetwork(urlString: String, port: String = "80") {
-        baseURLString = urlString
+    open func setupNetwork(networkIdentifier: String, networkConfig: CSNetworkConfig) {
+        networks[networkIdentifier] = networkConfig
+    }
+    
+    open func networkConfig(networkIdentifier: String) -> CSNetworkConfig? {
+        return networks[networkIdentifier]
     }
     
     // REST requests
@@ -48,5 +49,8 @@ open class CSNetwork {
     }
     
     open func getRequest() {
+    }
+    
+    open func downloadRequest() {
     }
 }
