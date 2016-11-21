@@ -14,7 +14,7 @@ public enum CSNetworkReturnStatus {
     case nonexistant
 }
 
-public enum CSNetworkRestRequest {
+fileprivate enum CSNetworkRestRequest {
     case create
     case read
     case update
@@ -77,8 +77,8 @@ open class CSNetworkManager {
     // MARK: - Private Functions
     
     fileprivate func restRequest(requestType: CSNetworkRestRequest, networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters?, completion: CSRestCompletion) {
-        let networkConfig = networks[networkIdentifier]
-        guard networkConfig != nil else {
+        let config = networkConfig(networkIdentifier: networkIdentifier)
+        guard config != nil else {
             completion(.nonexistant, nil)
             return
         }
