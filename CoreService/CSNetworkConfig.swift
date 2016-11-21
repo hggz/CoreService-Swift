@@ -9,9 +9,16 @@
 import Foundation
 
 public struct CSNetworkConfig {
+    /// Headers to use for request
     var headers: HTTPHeaders
+    
+    /// Network port
     var port: String
     
     /// Base url endpoint for all requests.
     var baseUrl: String
+    
+    var isOauth: Bool {
+        return headers["Authorization"] != nil
+    }
 }

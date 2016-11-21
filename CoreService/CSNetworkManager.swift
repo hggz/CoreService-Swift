@@ -8,7 +8,23 @@
 
 import Foundation
 
-public typealias CSNetwork = [String: CSNetworkConfig]
+public enum CSNetworkReturnStatus {
+    case success
+    case failure
+    case nonexistant
+}
+
+public enum CSNetworkRestRequest {
+    case create
+    case read
+    case update
+    case delete
+}
+
+public typealias CSNetworkIdentifier = String
+public typealias CSNetwork = [CSNetworkIdentifier: CSNetworkConfig]
+public typealias CSNetworkCompletion = (_ returnStatus: CSNetworkReturnStatus) -> Void
+public typealias CSRestCompletion = (_ returnStatus: CSNetworkReturnStatus, _ object: CSNetworkObject?) -> Void
 
 open class CSNetworkManager {
     // MARK: - Public Properties
@@ -22,25 +38,37 @@ open class CSNetworkManager {
     
     // MARK: - Public Functions
     
-    open func setupNetwork(networkIdentifier: String, networkConfig: CSNetworkConfig) {
+    open func setupNetwork(networkIdentifier: CSNetworkIdentifier, networkConfig: CSNetworkConfig) {
         networks[networkIdentifier] = networkConfig
     }
     
-    open func networkConfig(networkIdentifier: String) -> CSNetworkConfig? {
+    open func networkConfig(networkIdentifier: CSNetworkIdentifier) -> CSNetworkConfig? {
         return networks[networkIdentifier]
     }
     
     // REST requests
-    open func getObject() {
+    open func getObject(networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, completion: CSRestCompletion) {
+        restRequest(requestType: .read, networkIdentifier: networkIdentifier, object: object, parameters: nil, completion: completion)
     }
     
-    open func createObject() {
+    open func createObject(networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters, completion: CSRestCompletion) {
+        restRequest(requestType: .create, networkIdentifier: networkIdentifier, object: object, parameters: parameters, completion: completion)
     }
     
-    open func deleteObject() {
+    open func deleteObject(networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, completion: CSRestCompletion) {
+        restRequest(requestType: .delete, networkIdentifier: networkIdentifier, object: object, parameters: nil, completion: completion)
     }
     
-    open func updateObject() {
+    open func updateObject(networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters, completion: CSRestCompletion) {
+        restRequest(requestType: .update, networkIdentifier: networkIdentifier, object: object, parameters: parameters, completion: completion)
+    }
+    
+    open func restRequest(requestType: CSNetworkRestRequest, networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters?, completion: CSRestCompletion) {
+        let networkConfig = networks[networkIdentifier]
+        guard networkConfig != nil else {
+            completion(.nonexistant, nil)
+            return
+        }
     }
     
     // Universal Requests

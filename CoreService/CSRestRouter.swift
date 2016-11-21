@@ -9,10 +9,10 @@
 import Foundation
 
 enum CSRestRouter: URLRequestConvertible {
-    case createNetworkObject(networkConfig: CSNetworkConfig, networkObject: CSNetworkObject, parameters: Parameters)
-    case readNetworkObject(networkConfig: CSNetworkConfig, networkObject: CSNetworkObject)
-    case updateNetworkObject(networkConfig: CSNetworkConfig, networkObject: CSNetworkObject, parameters: Parameters)
-    case destroyNetworkObject(networkConfig: CSNetworkConfig, networkObject: CSNetworkObject)
+    case createNetworkObject(networkConfig: CSNetworkConfig, networkObject: CSNetworkObject, parameters: Parameters, completion: CSRestCompletion)
+    case readNetworkObject(networkConfig: CSNetworkConfig, networkObject: CSNetworkObject, completion: CSRestCompletion)
+    case updateNetworkObject(networkConfig: CSNetworkConfig, networkObject: CSNetworkObject, parameters: Parameters, completion: CSRestCompletion)
+    case destroyNetworkObject(networkConfig: CSNetworkConfig, networkObject: CSNetworkObject, completion: CSNetworkCompletion)
     
     var method: HTTPMethod {
         switch self {
@@ -29,26 +29,26 @@ enum CSRestRouter: URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .createNetworkObject(_, let networkObject, _):
+        case .createNetworkObject(_, let networkObject, _, _):
             return networkObject.path
-        case .readNetworkObject(_, let networkObject):
+        case .readNetworkObject(_, let networkObject, _):
             return networkObject.resourcePath()
-        case .updateNetworkObject(_, let networkObject, _):
+        case .updateNetworkObject(_, let networkObject, _, _):
             return networkObject.resourcePath()
-        case .destroyNetworkObject(_, let networkObject):
+        case .destroyNetworkObject(_, let networkObject, _):
             return networkObject.resourcePath()
         }
     }
     
     var config: CSNetworkConfig {
         switch self {
-        case .createNetworkObject(let networkConfig, _, _):
+        case .createNetworkObject(let networkConfig, _, _, _):
             return networkConfig
-        case .readNetworkObject(let networkConfig, _):
+        case .readNetworkObject(let networkConfig, _, _):
             return networkConfig
-        case .updateNetworkObject(let networkConfig, _, _):
+        case .updateNetworkObject(let networkConfig, _, _, _):
             return networkConfig
-        case .destroyNetworkObject(let networkConfig, _):
+        case .destroyNetworkObject(let networkConfig, _, _):
             return networkConfig
         }
     }
@@ -62,9 +62,9 @@ enum CSRestRouter: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         
         switch self {
-        case .createNetworkObject(_, _, let parameters):
+        case .createNetworkObject(_, _, let parameters, _):
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
-        case .updateNetworkObject(_, _, let parameters):
+        case .updateNetworkObject(_, _, let parameters, _):
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:
             break
