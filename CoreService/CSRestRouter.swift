@@ -61,6 +61,11 @@ enum CSRestRouter: URLRequestConvertible {
         var urlRequest = URLRequest(url: networkUrl.appendingPathComponent(path))
         urlRequest.httpMethod = method.rawValue
         
+        // setup request header
+        for (key, value) in config.headers {
+            urlRequest.setValue(value, forHTTPHeaderField: key.rawValue)
+        }
+        
         switch self {
         case .createNetworkObject(_, _, let parameters):
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
