@@ -44,15 +44,52 @@ class CoreServiceTests: XCTestCase {
         let headers: CSNetworkHeader = [.ContentType: "application/json"]
         networkIdentifier = "belle"
         networkConfig = CSNetworkConfig(headers: headers,
-                                                 port: "80",
-                                                 baseUrl: "http://ec2-54-68-223-236.us-west-2.compute.amazonaws.com",
-                                                 clientId: "RaetH7k4116wem7MHrUCOXDcL5yxdTMTpWvcZc90")
+                                        port: "80",
+                                        baseUrl: "http://ec2-54-68-223-236.us-west-2.compute.amazonaws.com",
+                                        clientId: "RaetH7k4116wem7MHrUCOXDcL5yxdTMTpWvcZc90")
         CSNetworkManager.main.setupNetwork(networkIdentifier: networkIdentifier!, networkConfig: networkConfig!)
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+    }
+    
+    func writeToFile(text: String) {
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: "log", ofType: "txt")!
+        do {
+            var fileContents = try String(contentsOfFile: path)
+            fileContents.append(text)
+            try fileContents.write(toFile: path, atomically: true, encoding: .utf8)
+        } catch {
+            
+        }
+    }
+    
+    func printFile() {
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: "log", ofType: "txt")!
+        do {
+            let text = try String(contentsOfFile: path)
+            print ("Printing file at \(path): \(text)")
+        } catch {
+            print ("Couldn't access contents of file for print file method")
+        }
+    }
+    
+    func fileLines() -> [String] {
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: "log", ofType: "txt")!
+        do {
+            let text = try String(contentsOfFile: path)
+            print ("file lines for \(path): \(text)")
+            return text.components(separatedBy: .newlines)
+        } catch {
+            print ("Couldn't access contents of file for file line method")
+            return []
+        }
+        return []
     }
     
     func testReflection() {
@@ -83,8 +120,16 @@ class CoreServiceTests: XCTestCase {
         return nsstring as String
     }
     
+    func setTokenForTest(token: String) {
+        let headers: CSNetworkHeader = [.ContentType: "application/json",
+                                        .Authorization: "token \(token)"]
+        CSNetworkManager.main.updateNetworkHeaders(networkIdentifier: self.networkIdentifier!, networkHeaders: headers)
+    }
+    
     // MARK: - Registration
     func testServer1() {
+        writeToFile(text: "\nTest: \(testTimestamp!)")
+        printFile()
         let path = pathForNetworkConfig(config: networkConfig!, path: "api/registration/")
         print ("making request to: \(path)")
         
@@ -109,6 +154,7 @@ class CoreServiceTests: XCTestCase {
     
     // MARK: - Login
     func testServer2() {
+        printFile()
         let path = pathForNetworkConfig(config: networkConfig!, path: "auth/login/")
         print ("making request to: \(path)")
         
@@ -116,6 +162,33 @@ class CoreServiceTests: XCTestCase {
                                       "password": testUserPassword!]
         let exp = expectation(description: #function)
         CSNetworkManager.main.postRequest(networkIdentifier: networkIdentifier!, path: path, parameters: parameters, completion: { (returnStatus, responseObject, error) in
+            if returnStatus == .success {
+                dump(responseObject)
+                let token = responseObject!.objectHash["auth_token"]
+                self.setTokenForTest(token: token as! String)
+                self.writeToFile(text: "\n\(token!)")
+                XCTAssert(true)
+            } else {
+                dump(responseObject)
+                XCTAssert(false)
+            }
+            exp.fulfill()
+        })
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    // MARK: - Get Users
+    func testServer3() {
+        let lines = self.fileLines()
+        let token = lines[lines.count - 1]
+        setTokenForTest(token: token)
+        
+        let path = pathForNetworkConfig(config: networkConfig!, path: "api/users/")
+        print ("making request to: \(path)")
+        
+        let parameters: Parameters = [:]
+        let exp = expectation(description: #function)
+        CSNetworkManager.main.getRequest(networkIdentifier: networkIdentifier!, path: path, parameters: parameters, completion: { (returnStatus, responseObject, error) in
             if returnStatus == .success {
                 dump(responseObject)
                 XCTAssert(true)

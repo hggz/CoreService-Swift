@@ -11,6 +11,7 @@
 		2E4860551DE3723A004D720E /* CSNetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4860541DE3723A004D720E /* CSNetworkConfig.swift */; };
 		2E4860571DE422BB004D720E /* CSOAuthRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4860561DE422BB004D720E /* CSOAuthRefresher.swift */; };
 		2E9AEA801E0608E0009D9B6E /* CSNetworkGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9AEA7F1E0608E0009D9B6E /* CSNetworkGlobal.swift */; };
+		2EC5ECC81E10F66E00FDFE37 /* log.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2EC5ECC71E10F66E00FDFE37 /* log.txt */; };
 		90BB311D1DDA5F5800034961 /* CSNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB311C1DDA5F5800034961 /* CSNetworkManager.swift */; };
 		90BB312F1DDA879500034961 /* AFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB311E1DDA879500034961 /* AFError.swift */; };
 		90BB31301DDA879500034961 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB311F1DDA879500034961 /* Alamofire.swift */; };
@@ -51,6 +52,7 @@
 		2E4860541DE3723A004D720E /* CSNetworkConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNetworkConfig.swift; sourceTree = "<group>"; };
 		2E4860561DE422BB004D720E /* CSOAuthRefresher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSOAuthRefresher.swift; sourceTree = "<group>"; };
 		2E9AEA7F1E0608E0009D9B6E /* CSNetworkGlobal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNetworkGlobal.swift; sourceTree = "<group>"; };
+		2EC5ECC71E10F66E00FDFE37 /* log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = log.txt; sourceTree = "<group>"; };
 		90BB311C1DDA5F5800034961 /* CSNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNetworkManager.swift; sourceTree = "<group>"; };
 		90BB311E1DDA879500034961 /* AFError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFError.swift; sourceTree = "<group>"; };
 		90BB311F1DDA879500034961 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 		90DB9DD11DD7EAE300C7046F /* CoreServiceTests */ = {
 			isa = PBXGroup;
 			children = (
+				2EC5ECC71E10F66E00FDFE37 /* log.txt */,
 				90DB9DD21DD7EAE300C7046F /* CoreServiceTests.swift */,
 				90DB9DD41DD7EAE300C7046F /* Info.plist */,
 			);
@@ -268,6 +271,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC5ECC81E10F66E00FDFE37 /* log.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +436,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = CoreService/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -452,6 +457,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = CoreService/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

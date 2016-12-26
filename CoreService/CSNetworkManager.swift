@@ -44,6 +44,15 @@ open class CSNetworkManager {
         networks[networkIdentifier] = networkConfig
     }
     
+    open func updateNetworkHeaders(networkIdentifier: CSNetworkIdentifier, networkHeaders: CSNetworkHeader) {
+        var config = networks[networkIdentifier]
+        guard config != nil else {
+            return
+        }
+        config!.headers = networkHeaders
+        networks[networkIdentifier] = config!
+    }
+    
     open func networkConfig(networkIdentifier: CSNetworkIdentifier) -> CSNetworkConfig? {
         return networks[networkIdentifier]
     }
