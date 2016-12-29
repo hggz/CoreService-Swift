@@ -90,14 +90,14 @@ open class CSNetworkManager {
     
     // Universal Requests
     
-    open func postRequest(networkIdentifier: CSNetworkIdentifier, path: CSNetworkPath, parameters: Parameters, completion: @escaping CSNetworkCompletion) {
+    open func postRequest(networkIdentifier: CSNetworkIdentifier, path: CSNetworkPath, parameters: Parameters?, completion: @escaping CSNetworkCompletion) {
         do {
         try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: .post, parameters: parameters, completion: completion)
         } catch {
         }
     }
     
-    open func getRequest(networkIdentifier: CSNetworkIdentifier, path: CSNetworkPath, parameters: Parameters, completion: @escaping CSNetworkCompletion) {
+    open func getRequest(networkIdentifier: CSNetworkIdentifier, path: CSNetworkPath, parameters: Parameters?, completion: @escaping CSNetworkCompletion) {
         do {
         try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: .get, parameters: parameters, completion: completion)
         } catch {
@@ -110,7 +110,7 @@ open class CSNetworkManager {
     
     // MARK: - Private Functions
     
-    fileprivate func networkRequest(networkIdentifier: CSNetworkIdentifier, path: CSNetworkPath, requestType: HTTPMethod, parameters: Parameters, completion: @escaping CSNetworkCompletion) throws {
+    fileprivate func networkRequest(networkIdentifier: CSNetworkIdentifier, path: CSNetworkPath, requestType: HTTPMethod, parameters: Parameters?, completion: @escaping CSNetworkCompletion) throws {
         // load config
         let config = networkConfig(networkIdentifier: networkIdentifier)
         guard config != nil else {
@@ -121,6 +121,7 @@ open class CSNetworkManager {
         let contentType = config!.headers[.ContentType]
         let headers = httpHeaderfromNetworkHeader(networkHeader: config!.headers)
         
+        print ("Request type:\(requestType)\nHeaders: \(headers)")
         request(NSURL(string: path) as! URL, method: requestType, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
             .validate(statusCode: 200..<401)
             .validate(contentType: [contentType!])

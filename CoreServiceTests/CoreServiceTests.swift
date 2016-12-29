@@ -126,6 +126,12 @@ class CoreServiceTests: XCTestCase {
         CSNetworkManager.main.updateNetworkHeaders(networkIdentifier: self.networkIdentifier!, networkHeaders: headers)
     }
     
+    func setMostRecentToken() {
+        let lines = self.fileLines()
+        let token = lines[lines.count - 1]
+        setTokenForTest(token: token)
+    }
+    
     // MARK: - Registration
     func testServer1() {
         writeToFile(text: "\nTest: \(testTimestamp!)")
@@ -165,8 +171,32 @@ class CoreServiceTests: XCTestCase {
             if returnStatus == .success {
                 dump(responseObject)
                 let token = responseObject!.objectHash["auth_token"]
-                self.setTokenForTest(token: token as! String)
-                self.writeToFile(text: "\n\(token!)")
+                if token != nil {
+                    self.setTokenForTest(token: token as! String)
+                    self.writeToFile(text: "\n\(token!)")
+                    XCTAssert(true)
+                } else {
+                    XCTAssert(false)
+                }
+            } else {
+                dump(responseObject)
+                XCTAssert(false)
+            }
+            exp.fulfill()
+        })
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    // MARK: - Get Users Non REST Format
+    func testServer3() {
+        setMostRecentToken()
+        let path = pathForNetworkConfig(config: networkConfig!, path: "api/users/")
+        print ("making request to: \(path)")
+        
+        let exp = expectation(description: #function)
+        CSNetworkManager.main.getRequest(networkIdentifier: networkIdentifier!, path: path, parameters: nil, completion: { (returnStatus, responseObject, error) in
+            if returnStatus == .success {
+                dump(responseObject)
                 XCTAssert(true)
             } else {
                 dump(responseObject)
@@ -177,18 +207,16 @@ class CoreServiceTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
     
+    // MARK: - REST
+    
     // MARK: - Get Users
-    func testServer3() {
-        let lines = self.fileLines()
-        let token = lines[lines.count - 1]
-        setTokenForTest(token: token)
-        
+    func testServer4() {
+        setMostRecentToken()
         let path = pathForNetworkConfig(config: networkConfig!, path: "api/users/")
         print ("making request to: \(path)")
         
-        let parameters: Parameters = [:]
         let exp = expectation(description: #function)
-        CSNetworkManager.main.getRequest(networkIdentifier: networkIdentifier!, path: path, parameters: parameters, completion: { (returnStatus, responseObject, error) in
+        CSNetworkManager.main.getRequest(networkIdentifier: networkIdentifier!, path: path, parameters: nil, completion: { (returnStatus, responseObject, error) in
             if returnStatus == .success {
                 dump(responseObject)
                 XCTAssert(true)

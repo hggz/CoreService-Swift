@@ -9,14 +9,13 @@
 import Foundation
 
 public typealias CSNetworkHash = [String: Any]
-public typealias CSNetworkReturnObjects = [CSNetworkReturnObject]
 
 public struct CSNetworkReturnObject {
     public var data: Data
     public var objectHash: CSNetworkHash
-    public var objects: [CSNetworkReturnObjects]
+    public var objects: [CSNetworkReturnObject]
     
-    init(data: Data?, objectHash: CSNetworkHash, objects: [CSNetworkReturnObjects]) {
+    init(data: Data?, objectHash: CSNetworkHash, objects: [CSNetworkReturnObject]) {
         guard data != nil else {
             self.objects = []
             self.data = Data()
@@ -36,9 +35,28 @@ public struct CSNetworkReturnObject {
             return
         }
         self.data = data!
+        self.objectHash = [:]
         self.objects = []
             do {
-            self.objectHash = try JSONSerialization.jsonObject(with: self.data, options: []) as! CSNetworkHash
+            let json = try JSONSerialization.jsonObject(with: self.data, options: []) as Any
+                if json is CSNetworkHash {
+                    self.objectHash = json as! CSNetworkHash
+                    self.objects = []
+                    self.data = Data()
+                } else if json is [Any] {
+                    let arrayOfJson = json as! [[String: Any]]
+                    var objects: [CSNetworkReturnObject] = []
+                        for object in arrayOfJson {
+                            do {
+                                let networkObject = CSNetworkReturnObject(objectHash: object)
+                                objects.append(networkObject)
+                            } catch {
+                                assert(false, "Unable to process network object: \(object)")
+                            }
+                        }
+                    self.objects = objects
+                    self.data = data!
+                }
             } catch {
                 self.objectHash = [:]
             }
@@ -50,7 +68,7 @@ public struct CSNetworkReturnObject {
         self.objects = []
     }
     
-    init (objects: [CSNetworkReturnObjects]) {
+    init (objects: [CSNetworkReturnObject]) {
         self.data = Data()
         self.objectHash = [:]
         self.objects = objects
