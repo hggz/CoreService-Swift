@@ -16,6 +16,13 @@ public class CSNetworkObject: NSObject {
     
     /// Identifier to use when referring to this object. This is the primary key for the object on a server. IE: 12 or johnny_appleseed69. Will default to id or to classId unless overwritten. If overwritten, it'll take that value.
     public var resourceID: ResourceIdentifier = ""
+    
+    override init () {
+    }
+    
+    init (path: String) {
+        self.path = path
+    }
 }
 
 extension CSNetworkObject: URLConvertible {

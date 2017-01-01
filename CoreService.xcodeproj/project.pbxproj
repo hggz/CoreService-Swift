@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2E14BB741E0634810052E64E /* CSNetworkReturnObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E14BB731E0634810052E64E /* CSNetworkReturnObject.swift */; };
 		2E4860551DE3723A004D720E /* CSNetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4860541DE3723A004D720E /* CSNetworkConfig.swift */; };
-		2E4860571DE422BB004D720E /* CSOAuthRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4860561DE422BB004D720E /* CSOAuthRefresher.swift */; };
 		2E9AEA801E0608E0009D9B6E /* CSNetworkGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9AEA7F1E0608E0009D9B6E /* CSNetworkGlobal.swift */; };
 		2EC5ECC81E10F66E00FDFE37 /* log.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2EC5ECC71E10F66E00FDFE37 /* log.txt */; };
 		90BB311D1DDA5F5800034961 /* CSNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB311C1DDA5F5800034961 /* CSNetworkManager.swift */; };
@@ -31,7 +30,6 @@
 		90BB313E1DDA879500034961 /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB312D1DDA879500034961 /* Timeline.swift */; };
 		90BB313F1DDA879500034961 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB312E1DDA879500034961 /* Validation.swift */; };
 		90BB31461DDBB3CE00034961 /* CSNetworkObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB31451DDBB3CE00034961 /* CSNetworkObject.swift */; };
-		90BB31491DDBC18000034961 /* CSRestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BB31481DDBC18000034961 /* CSRestRouter.swift */; };
 		90DB9DCE1DD7EAE300C7046F /* CoreService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90DB9DC41DD7EAE300C7046F /* CoreService.framework */; };
 		90DB9DD31DD7EAE300C7046F /* CoreServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DB9DD21DD7EAE300C7046F /* CoreServiceTests.swift */; };
 		90DB9DD51DD7EAE300C7046F /* CoreService.h in Headers */ = {isa = PBXBuildFile; fileRef = 90DB9DC71DD7EAE300C7046F /* CoreService.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -50,7 +48,6 @@
 /* Begin PBXFileReference section */
 		2E14BB731E0634810052E64E /* CSNetworkReturnObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNetworkReturnObject.swift; sourceTree = "<group>"; };
 		2E4860541DE3723A004D720E /* CSNetworkConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNetworkConfig.swift; sourceTree = "<group>"; };
-		2E4860561DE422BB004D720E /* CSOAuthRefresher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSOAuthRefresher.swift; sourceTree = "<group>"; };
 		2E9AEA7F1E0608E0009D9B6E /* CSNetworkGlobal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNetworkGlobal.swift; sourceTree = "<group>"; };
 		2EC5ECC71E10F66E00FDFE37 /* log.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = log.txt; sourceTree = "<group>"; };
 		90BB311C1DDA5F5800034961 /* CSNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNetworkManager.swift; sourceTree = "<group>"; };
@@ -72,7 +69,6 @@
 		90BB312D1DDA879500034961 /* Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
 		90BB312E1DDA879500034961 /* Validation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
 		90BB31451DDBB3CE00034961 /* CSNetworkObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSNetworkObject.swift; sourceTree = "<group>"; };
-		90BB31481DDBC18000034961 /* CSRestRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSRestRouter.swift; sourceTree = "<group>"; };
 		90DB9DC41DD7EAE300C7046F /* CoreService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90DB9DC71DD7EAE300C7046F /* CoreService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreService.h; sourceTree = "<group>"; };
 		90DB9DC81DD7EAE300C7046F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -150,9 +146,7 @@
 				90DB9DC81DD7EAE300C7046F /* Info.plist */,
 				90BB311C1DDA5F5800034961 /* CSNetworkManager.swift */,
 				90BB31451DDBB3CE00034961 /* CSNetworkObject.swift */,
-				90BB31481DDBC18000034961 /* CSRestRouter.swift */,
 				2E4860541DE3723A004D720E /* CSNetworkConfig.swift */,
-				2E4860561DE422BB004D720E /* CSOAuthRefresher.swift */,
 				2E9AEA7F1E0608E0009D9B6E /* CSNetworkGlobal.swift */,
 				2E14BB731E0634810052E64E /* CSNetworkReturnObject.swift */,
 			);
@@ -286,7 +280,6 @@
 				90BB31341DDA879500034961 /* Notifications.swift in Sources */,
 				90BB31351DDA879500034961 /* ParameterEncoding.swift in Sources */,
 				90BB31301DDA879500034961 /* Alamofire.swift in Sources */,
-				90BB31491DDBC18000034961 /* CSRestRouter.swift in Sources */,
 				2E9AEA801E0608E0009D9B6E /* CSNetworkGlobal.swift in Sources */,
 				90BB313F1DDA879500034961 /* Validation.swift in Sources */,
 				90BB31371DDA879500034961 /* Response.swift in Sources */,
@@ -304,7 +297,6 @@
 				90BB31381DDA879500034961 /* ResponseSerialization.swift in Sources */,
 				90BB31361DDA879500034961 /* Request.swift in Sources */,
 				90BB31321DDA879500034961 /* MultipartFormData.swift in Sources */,
-				2E4860571DE422BB004D720E /* CSOAuthRefresher.swift in Sources */,
 				90BB313B1DDA879500034961 /* SessionDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

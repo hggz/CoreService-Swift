@@ -32,6 +32,12 @@ class CoreServiceTests: XCTestCase {
     var testUserEmail: String?
     var testUserPassword: String?
     
+    var testMenuItemName: String?
+    var testMenuItemDescription: String?
+    var testMenuItemPrice: String?
+    var testMenuItemPicture: String?
+    var testMenuItemVenueId: String?
+    
     override func setUp() {
         super.setUp()
         testTimestamp = currentTimestampId()
@@ -40,6 +46,12 @@ class CoreServiceTests: XCTestCase {
         testUserFirstName = "first_test\(testTimestamp!)"
         testUserLastName = "last_test\(testTimestamp!)"
         testUserPassword = "test\(testTimestamp)"
+        
+        testMenuItemName = "testItem\(testTimestamp!)"
+        testMenuItemDescription = "testItemDescription\(testTimestamp!)"
+        testMenuItemPrice = "testItemPrice\(testTimestamp!)"
+        testMenuItemPicture = "testItemPicture\(testTimestamp!)"
+        testMenuItemVenueId = "9"
         
         let headers: CSNetworkHeader = [.ContentType: "application/json"]
         networkIdentifier = "belle"
@@ -209,22 +221,30 @@ class CoreServiceTests: XCTestCase {
     
     // MARK: - REST
     
-    // MARK: - Get Users
+    // MARK: - Create Menu Item
     func testServer4() {
         setMostRecentToken()
-        let path = pathForNetworkConfig(config: networkConfig!, path: "api/users/")
+        let path = pathForNetworkConfig(config: networkConfig!, path: "api/menuitems/")
         print ("making request to: \(path)")
         
+        let newObject = CSNetworkObject(path: path)
+        
+        let parameters: Parameters = ["name": testMenuItemName!,
+                          "description": testMenuItemDescription!,
+                          "price": testMenuItemPrice!,
+                          "picture": testMenuItemPicture!,
+                          "venueId": testMenuItemVenueId!]
+        
         let exp = expectation(description: #function)
-        CSNetworkManager.main.getRequest(networkIdentifier: networkIdentifier!, path: path, parameters: nil, completion: { (returnStatus, responseObject, error) in
+        CSNetworkManager.main.createObject(networkIdentifier: networkIdentifier!, object: newObject, parameters: parameters, completion: { (returnStatus, object, error) in
             if returnStatus == .success {
-                dump(responseObject)
                 XCTAssert(true)
             } else {
-                dump(responseObject)
+                print ("error: \(error)")
                 XCTAssert(false)
             }
             exp.fulfill()
+            
         })
         waitForExpectations(timeout: 10, handler: nil)
     }

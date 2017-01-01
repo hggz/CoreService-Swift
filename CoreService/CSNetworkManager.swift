@@ -58,17 +58,24 @@ open class CSNetworkManager {
     }
     
     // REST requests
+    
     open func getObject(networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, completion: @escaping CSRestCompletion) {
         do {
-        try restRequest(requestType: .read, networkIdentifier: networkIdentifier, object: object, parameters: nil, completion: completion)
+            let method: HTTPMethod = .get
+            let path = pathForNetworkObject(method: method, object: object)
+            try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: method, parameters: nil, completion: { (returnStatus, responseObject, error) in
+            })
         } catch {
             
         }
     }
     
-    open func createObject(networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters, completion: @escaping CSRestCompletion) {
+    open func createObject(networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters?, completion: @escaping CSRestCompletion) {
         do {
-        try restRequest(requestType: .create, networkIdentifier: networkIdentifier, object: object, parameters: parameters, completion: completion)
+            let method: HTTPMethod = .post
+            let path = pathForNetworkObject(method: method, object: object)
+            try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: method, parameters: parameters, completion: { (returnStatus, responseObject, error) in
+            })
         } catch {
             
         }
@@ -76,14 +83,23 @@ open class CSNetworkManager {
     
     open func deleteObject(networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, completion: @escaping CSRestCompletion) {
         do {
-        try restRequest(requestType: .delete, networkIdentifier: networkIdentifier, object: object, parameters: nil, completion: completion)
+            let method: HTTPMethod = .delete
+            let path = pathForNetworkObject(method: method, object: object)
+            try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: method, parameters: nil, completion: { (returnStatus, responseObject, error) in
+            })
         } catch {
         }
     }
     
-    open func updateObject(networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters, completion: @escaping CSRestCompletion) {
+    open func updateObject(networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters?, completion: @escaping CSRestCompletion) {
         do {
-        try restRequest(requestType: .update, networkIdentifier: networkIdentifier, object: object, parameters: parameters, completion: completion)
+            let method: HTTPMethod = .put
+            let path = pathForNetworkObject(method: method, object: object)
+            try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: method, parameters: parameters, completion: { (returnStatus, responseObject, error) in
+                if returnStatus == .success {
+                } else {
+                }
+            })
         } catch {
         }
     }
@@ -136,52 +152,7 @@ open class CSNetworkManager {
         }
     }
     
-    fileprivate func restRequest(requestType: CSNetworkRestRequest, networkIdentifier: CSNetworkIdentifier, object: CSNetworkObject, parameters: Parameters?, completion: @escaping CSRestCompletion) throws {
-        // check config
-        let config = networkConfig(networkIdentifier: networkIdentifier)
-        guard config != nil else { 
-            completion(.nonexistant, nil, nil)
-            return
-        }
-        
-        // setup request
-        let request = try restUrlRequest(type: requestType, config: config!, object: object, parameters: parameters)
-        guard request != nil else { 
-            completion(.invalid, nil, nil)
-            return
-        }
-        
-        // setup adapter and retrier
-        let refresher = CSOAuthRefresher(request: request!, config: config!)
-        
-        // perform request
-        let sessionManager = SessionManager()
-        sessionManager.adapter = refresher
-        sessionManager.retrier = refresher
-        sessionManager.request(request!).validate().response { (response) in
-            completion(.success, object, nil) // should be new object. not current object
-        }
-    }
-    
-    fileprivate func restUrlRequest(type: CSNetworkRestRequest, config: CSNetworkConfig, object: CSNetworkObject, parameters: Parameters?) throws -> URLRequest? {
-        if parameters != nil {
-            switch type {
-            case .create:
-                return try CSRestRouter.createNetworkObject(networkConfig: config, networkObject: object, parameters: parameters!).asURLRequest()
-            case .update:
-                return try CSRestRouter.updateNetworkObject(networkConfig: config, networkObject: object, parameters: parameters!).asURLRequest()
-            default:
-                return nil
-            }
-        } else { 
-            switch type {
-            case .read:
-                return try CSRestRouter.readNetworkObject(networkConfig: config, networkObject: object).asURLRequest()
-            case .delete:
-                return try CSRestRouter.destroyNetworkObject(networkConfig: config, networkObject: object).asURLRequest()
-            default:
-                return nil
-            }
-        }
+    fileprivate func pathForNetworkObject(method: HTTPMethod, object: CSNetworkObject) -> String {
+        return method == .post ? object.path : object.resourcePath()
     }
 }
