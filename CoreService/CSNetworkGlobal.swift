@@ -19,3 +19,34 @@ public func httpHeaderfromNetworkHeader(networkHeader: CSNetworkHeader) -> HTTPH
     }
     return header
 }
+
+public func pathForNetworkObject(method: HTTPMethod, object: CSNetworkObject) -> String {
+    return method == .post ? object.path : object.resourcePath()
+}
+
+public func deserializeReturnObjectIntoNetworkObject(networkObject: CSNetworkObject, returnObject: CSNetworkReturnObject) {
+    let reflection = Mirror(reflecting: networkObject)
+    var objectHash = returnObject.objectHash
+    if objectHash.count < 1 && returnObject.objects.count > 0 {
+        objectHash = returnObject.objects[0].objectHash
+    }
+    for child in reflection.children {
+        let property = child.label!
+        let value = deserializedValueFromHashValue(hashValue: objectHash[property])
+        networkObject.setValue(value, forKey: property)
+    }
+}
+
+private func deserializedValueFromHashValue(hashValue: Any?) -> Any {
+    var value = ""
+    if hashValue != nil {
+        if hashValue is [Any] {
+            value = "" // handle array
+        } else if hashValue is [String: Any] {
+            value = "" // handle dictionary
+        } else {
+            value = "\(hashValue!)"
+        }
+    }
+    return value
+}

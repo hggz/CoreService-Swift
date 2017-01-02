@@ -9,6 +9,7 @@
 import XCTest
 @testable import CoreService
 
+// Test Objects
 class TestModel: CSNetworkObject {
     var numberOfMemes: Int = 69
     
@@ -16,6 +17,13 @@ class TestModel: CSNetworkObject {
         get { return "meme" }
         set { super.path = newValue }
     }
+}
+
+class MenuItem: CSNetworkObject {
+    var picture: String?
+    var price: String?
+    var venueId: String?
+    var id: String?
 }
 
 /// *NOTE* BE SURE TO NAME YOUR NETWORK TASKS IN THE PROPER ORDER YOU WANT THEM EXECUTED. IE: test1, test2, test3
@@ -245,6 +253,51 @@ class CoreServiceTests: XCTestCase {
             }
             exp.fulfill()
             
+        })
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    // MARK: - Read Menu Item
+    func testServer5() {
+    // For this test, venue id will always be the same. This test server is returning more objects, so just checking for one unique value they all share.
+        setMostRecentToken()
+        let path = pathForNetworkConfig(config: networkConfig!, path: "api/menuitems/")
+        print ("making request to: \(path)")
+        
+        let newObject = MenuItem(path: path, resourceID: "name=\(testMenuItemName!)")
+        
+        let exp = expectation(description: #function)
+        CSNetworkManager.main.getObject(networkIdentifier: networkIdentifier!, object: newObject, completion: { (returnStatus, object, error) in
+            if returnStatus == .success {
+                let menuItem = object as! MenuItem
+                XCTAssert(menuItem.venueId! == self.testMenuItemVenueId!)
+            } else {
+                print ("error: \(error)")
+                XCTAssert(false)
+            }
+            exp.fulfill()
+        })
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    // MARK: - Update Menu Item
+    func testServer6() {
+        setMostRecentToken()
+        let path = pathForNetworkConfig(config: networkConfig!, path: "api/menuitems/")
+        print ("making request to: \(path)")
+        
+        let newObject = MenuItem(path: path, resourceID: "name=\(testMenuItemName!)")
+        
+        let exp = expectation(description: #function)
+        CSNetworkManager.main.getObject(networkIdentifier: networkIdentifier!, object: newObject, completion: { (returnStatus, object, error) in
+            if returnStatus == .success {
+                let menuItem = object as! MenuItem
+                XCTAssert(menuItem.venueId! == self.testMenuItemVenueId!)
+            } else {
+                print ("error: \(error)")
+                XCTAssert(false)
+            }
+            exp.fulfill()
         })
         waitForExpectations(timeout: 10, handler: nil)
     }

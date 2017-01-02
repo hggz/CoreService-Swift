@@ -38,6 +38,9 @@ open class CSNetworkManager {
     
     fileprivate var networks: CSNetwork = [:]
     
+    // TODO
+    fileprivate var requestsToRetry: [URLRequest] = []
+    
     // MARK: - Public Functions
     
     open func setupNetwork(networkIdentifier: CSNetworkIdentifier, networkConfig: CSNetworkConfig) {
@@ -64,6 +67,12 @@ open class CSNetworkManager {
             let method: HTTPMethod = .get
             let path = pathForNetworkObject(method: method, object: object)
             try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: method, parameters: nil, completion: { (returnStatus, responseObject, error) in
+                if returnStatus == .success {
+                    deserializeReturnObjectIntoNetworkObject(networkObject: object, returnObject: responseObject!)
+                    completion(.success, object, nil)
+                } else {
+                    completion(.failure, nil, error)
+                }
             })
         } catch {
             
@@ -75,6 +84,12 @@ open class CSNetworkManager {
             let method: HTTPMethod = .post
             let path = pathForNetworkObject(method: method, object: object)
             try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: method, parameters: parameters, completion: { (returnStatus, responseObject, error) in
+                if returnStatus == .success {
+                    let retrievedObject = CSNetworkObject()
+                    completion(.success, retrievedObject, nil)
+                } else {
+                    completion(.failure, nil, error)
+                }
             })
         } catch {
             
@@ -86,6 +101,12 @@ open class CSNetworkManager {
             let method: HTTPMethod = .delete
             let path = pathForNetworkObject(method: method, object: object)
             try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: method, parameters: nil, completion: { (returnStatus, responseObject, error) in
+                if returnStatus == .success {
+                    let retrievedObject = CSNetworkObject()
+                    completion(.success, retrievedObject, nil)
+                } else {
+                    completion(.failure, nil, error)
+                }
             })
         } catch {
         }
@@ -97,7 +118,10 @@ open class CSNetworkManager {
             let path = pathForNetworkObject(method: method, object: object)
             try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: method, parameters: parameters, completion: { (returnStatus, responseObject, error) in
                 if returnStatus == .success {
+                    let retrievedObject = CSNetworkObject()
+                    completion(.success, retrievedObject, nil)
                 } else {
+                    completion(.failure, nil, error)
                 }
             })
         } catch {
@@ -150,9 +174,5 @@ open class CSNetworkManager {
                     completion(.failure, nil, response.result.error)
                 }
         }
-    }
-    
-    fileprivate func pathForNetworkObject(method: HTTPMethod, object: CSNetworkObject) -> String {
-        return method == .post ? object.path : object.resourcePath()
     }
 }

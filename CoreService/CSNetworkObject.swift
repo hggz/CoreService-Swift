@@ -23,6 +23,15 @@ public class CSNetworkObject: NSObject {
     init (path: String) {
         self.path = path
     }
+    
+    init (resourceID: String) {
+        self.resourceID = resourceID
+    }
+    
+    init (path: String, resourceID: String) {
+        self.path = path
+        self.resourceID = resourceID
+    }
 }
 
 extension CSNetworkObject: URLConvertible {
@@ -36,7 +45,7 @@ extension CSNetworkObject {
     ///
     /// - returns: full url string path to resource on server.
     public func resourcePath() -> String {
-        return "\(path)/\(resourceID)"
+        return "\(path)?\(resourceID)"
     }
     
     /// Converts snake case string to camel case.
