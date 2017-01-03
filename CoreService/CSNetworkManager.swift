@@ -38,7 +38,7 @@ open class CSNetworkManager {
     
     fileprivate var networks: CSNetwork = [:]
     
-    // TODO
+    // MARK: - TODO
     fileprivate var requestsToRetry: [URLRequest] = []
     
     // MARK: - Public Functions
@@ -145,6 +145,7 @@ open class CSNetworkManager {
         }
     }
     
+    // MARK: - TODO
     open func downloadRequest() {
     }
     
@@ -160,6 +161,7 @@ open class CSNetworkManager {
         
         let contentType = config!.headers[.ContentType]
         let headers = httpHeaderfromNetworkHeader(networkHeader: config!.headers)
+        
         
         print ("Request type:\(requestType)\nHeaders: \(headers)")
         request(NSURL(string: path) as! URL, method: requestType, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
