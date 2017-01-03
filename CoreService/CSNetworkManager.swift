@@ -102,8 +102,7 @@ open class CSNetworkManager {
             let path = pathForNetworkObject(method: method, object: object)
             try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: method, parameters: nil, completion: { (returnStatus, responseObject, error) in
                 if returnStatus == .success {
-                    let retrievedObject = CSNetworkObject()
-                    completion(.success, retrievedObject, nil)
+                    completion(.success, nil, nil)
                 } else {
                     completion(.failure, nil, error)
                 }
@@ -118,8 +117,8 @@ open class CSNetworkManager {
             let path = pathForNetworkObject(method: method, object: object)
             try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: method, parameters: parameters, completion: { (returnStatus, responseObject, error) in
                 if returnStatus == .success {
-                    let retrievedObject = CSNetworkObject()
-                    completion(.success, retrievedObject, nil)
+                    deserializeReturnObjectIntoNetworkObject(networkObject: object, returnObject: responseObject!)
+                    completion(.success, object, nil)
                 } else {
                     completion(.failure, nil, error)
                 }
@@ -134,6 +133,7 @@ open class CSNetworkManager {
         do {
         try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: .post, parameters: parameters, completion: completion)
         } catch {
+            completion(.failure, nil, nil)
         }
     }
     
@@ -141,7 +141,7 @@ open class CSNetworkManager {
         do {
         try networkRequest(networkIdentifier: networkIdentifier, path: path, requestType: .get, parameters: parameters, completion: completion)
         } catch {
-            
+            completion(.failure, nil, nil)
         }
     }
     

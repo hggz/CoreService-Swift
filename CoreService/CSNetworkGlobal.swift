@@ -27,8 +27,9 @@ public func pathForNetworkObject(method: HTTPMethod, object: CSNetworkObject) ->
 public func deserializeReturnObjectIntoNetworkObject(networkObject: CSNetworkObject, returnObject: CSNetworkReturnObject) {
     let reflection = Mirror(reflecting: networkObject)
     var objectHash = returnObject.objectHash
+    // If we can't find an item, we'll look inside collection of objects and choose the last one. Revisit this later.
     if objectHash.count < 1 && returnObject.objects.count > 0 {
-        objectHash = returnObject.objects[0].objectHash
+        objectHash = returnObject.objects[returnObject.objects.count - 1].objectHash
     }
     for child in reflection.children {
         let property = child.label!

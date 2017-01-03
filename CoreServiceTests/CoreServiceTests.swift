@@ -270,7 +270,6 @@ class CoreServiceTests: XCTestCase {
         CSNetworkManager.main.getObject(networkIdentifier: networkIdentifier!, object: newObject, completion: { (returnStatus, object, error) in
             if returnStatus == .success {
                 let menuItem = object as! MenuItem
-                XCTAssert(menuItem.venueId! == self.testMenuItemVenueId!)
             } else {
                 print ("error: \(error)")
                 XCTAssert(false)
@@ -285,20 +284,69 @@ class CoreServiceTests: XCTestCase {
         setMostRecentToken()
         let path = pathForNetworkConfig(config: networkConfig!, path: "api/menuitems/")
         print ("making request to: \(path)")
+
+        let parameters: Parameters = ["name": "NEW\(testMenuItemName!)",
+                          "description": "NEW\(testMenuItemDescription!)",
+                          "price": "NEW\(testMenuItemPrice!)",
+                          "picture": "NEW\(testMenuItemPicture!)"]
         
         let newObject = MenuItem(path: path, resourceID: "name=\(testMenuItemName!)")
         
         let exp = expectation(description: #function)
+        // Fetch the latest one first
+        CSNetworkManager.main.getObject(networkIdentifier: networkIdentifier!, object: newObject, completion: { (returnStatus, object, error) in
+            if returnStatus == .success { 
+                let menuItem = object as! MenuItem
+                menuItem.resourceID = menuItem.id!
+                // Update the latest one
+                CSNetworkManager.main.updateObject(networkIdentifier: self.networkIdentifier!, object: menuItem, parameters: parameters, completion: { (returnStatus, object, error) in
+                    if returnStatus == .success {
+                        let updatedItem = object as! MenuItem
+                        XCTAssert(updatedItem.venueId! == self.testMenuItemVenueId!)
+                    } else {
+                        print ("error: \(error)")
+                        XCTAssert(false)
+                    }
+                    exp.fulfill()
+                })
+            } else {
+                    print ("error: \(error)")
+                    XCTAssert(false)
+            }
+        })
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    // MARK: - Delete Menu Item
+    func testServer7() {
+        setMostRecentToken()
+        let path = pathForNetworkConfig(config: networkConfig!, path: "api/menuitems/")
+        print ("making request to: \(path)")
+
+        let newObject = MenuItem(path: path, resourceID: "name=\(testMenuItemName!)")
+        
+        let exp = expectation(description: #function)
+        // Fetch the latest one first
         CSNetworkManager.main.getObject(networkIdentifier: networkIdentifier!, object: newObject, completion: { (returnStatus, object, error) in
             if returnStatus == .success {
                 let menuItem = object as! MenuItem
-                XCTAssert(menuItem.venueId! == self.testMenuItemVenueId!)
+                menuItem.resourceID = menuItem.id!
+                // Delete the latest one
+                CSNetworkManager.main.deleteObject(networkIdentifier: self.networkIdentifier!, object: menuItem, completion: { (returnStatus, object, error) in
+                    if returnStatus == .success {
+                        XCTAssert(true)
+                    } else {
+                        print ("error: \(error)")
+                        XCTAssert(false)
+                    }
+                    exp.fulfill()
+                })
             } else {
                 print ("error: \(error)")
                 XCTAssert(false)
+                exp.fulfill()
             }
-            exp.fulfill()
-        })
+        }) 
         waitForExpectations(timeout: 10, handler: nil)
     }
 }

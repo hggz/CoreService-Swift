@@ -45,7 +45,9 @@ extension CSNetworkObject {
     ///
     /// - returns: full url string path to resource on server.
     public func resourcePath() -> String {
-        return "\(path)?\(resourceID)"
+        let delim = resourceID.contains("=") ? "?" : ""
+        let suffix = resourceID.contains("=") ? "" : "/"
+        return "\(path)\(delim)\(resourceID)\(suffix)"
     }
     
     /// Converts snake case string to camel case.
