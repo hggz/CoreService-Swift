@@ -36,12 +36,18 @@ open class CSNetworkManager {
     
     // MARK: - Private Properties
     
+    fileprivate var debugEnabled: Bool = false
+    
     fileprivate var networks: CSNetwork = [:]
     
     // MARK: - TODO
     fileprivate var requestsToRetry: [URLRequest] = []
     
     // MARK: - Public Functions
+    
+    open func debug(isEnabled: Bool) {
+        debugEnabled = isEnabled
+    }
     
     open func setupNetwork(networkIdentifier: CSNetworkIdentifier, networkConfig: CSNetworkConfig) {
         networks[networkIdentifier] = networkConfig
@@ -163,7 +169,7 @@ open class CSNetworkManager {
         let headers = httpHeaderfromNetworkHeader(networkHeader: config!.headers)
         
         
-        print ("Request type:\(requestType)\nHeaders: \(headers)")
+        log (logString: "Making a request to:\(path):\nRequest type:\(requestType)\nHeaders: \(headers)\nParameters: \(parameters)")
         request(NSURL(string: path) as! URL, method: requestType, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
             .validate(statusCode: 200..<401)
             .validate(contentType: [contentType!])
@@ -171,10 +177,18 @@ open class CSNetworkManager {
                 switch response.result {
                 case .success:
                     let returnObject = CSNetworkReturnObject(data: response.data)
+                    self.log(logString: "Successful Response:\n\(returnObject)")
                     completion(.success, returnObject, nil)
                 case .failure:
+                    self.log(logString: "Response Failure:\n\(response.result.error)")
                     completion(.failure, nil, response.result.error)
                 }
+        }
+    }
+    
+    fileprivate func log(logString: String) {
+        if debugEnabled {
+            print (logString)
         }
     }
 }
