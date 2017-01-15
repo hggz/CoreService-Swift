@@ -41,7 +41,7 @@ public struct CSNetworkConfig {
         return headers[.Authorization] != nil
     }
     
-    init(headers: CSNetworkHeader, port: String, baseUrl: String, clientId: String) {
+    public init(headers: CSNetworkHeader, port: String, baseUrl: String, clientId: String) {
         self.headers = headers
         self.port = port
         self.baseUrl = baseUrl
