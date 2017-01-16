@@ -172,7 +172,7 @@ open class CSNetworkManager {
         log (logString: "Making a request to \(path)\nRequest type:\(requestType)\nHeaders: \(headers)\nParameters: \(parameters)")
         request(NSURL(string: path) as! URL, method: requestType, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
             .validate(statusCode: 200..<501)
-            .validate(contentType: [contentType!])
+//            .validate(contentType: [contentType!])
             .responseJSON { (response) in
                 switch response.result {
                 case .success:
