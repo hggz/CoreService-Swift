@@ -15,7 +15,7 @@ public struct CSNetworkReturnObject {
     public var objectHash: CSNetworkHash
     public var objects: [CSNetworkReturnObject]
     
-    init(data: Data?, objectHash: CSNetworkHash, objects: [CSNetworkReturnObject]) {
+    public init(data: Data?, objectHash: CSNetworkHash, objects: [CSNetworkReturnObject]) {
         guard data != nil else {
             self.objects = []
             self.data = Data()
@@ -27,7 +27,7 @@ public struct CSNetworkReturnObject {
         self.objects = objects
     }
     
-    init (data: Data?) {
+    public init (data: Data?) {
         guard data != nil else {
             self.objects = []
             self.data = Data()
@@ -62,13 +62,13 @@ public struct CSNetworkReturnObject {
             }
     }
     
-    init (objectHash: CSNetworkHash) {
+    public init (objectHash: CSNetworkHash) {
         self.objectHash = objectHash
         self.data = NSKeyedArchiver.archivedData(withRootObject: self.objectHash as Any)
         self.objects = []
     }
     
-    init (objects: [CSNetworkReturnObject]) {
+    public init (objects: [CSNetworkReturnObject]) {
         self.data = Data()
         self.objectHash = [:]
         self.objects = objects
