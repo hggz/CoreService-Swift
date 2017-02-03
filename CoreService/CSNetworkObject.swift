@@ -10,25 +10,25 @@ import Foundation
 
 public typealias ResourceIdentifier = String
 
-public class CSNetworkObject: NSObject {
+open class CSNetworkObject: NSObject {
     /// Root object location on server, minus base Url. IE: users or api/users. Should only be overwritten, not reflected.
     public var path: String = ""
     
     /// Identifier to use when referring to this object. This is the primary key for the object on a server. IE: 12 or johnny_appleseed69. Will default to id or to classId unless overwritten. If overwritten, it'll take that value.
     public var resourceID: ResourceIdentifier = ""
     
-    override init () {
+    public override init () {
     }
     
-    init (path: String) {
+    public init (path: String) {
         self.path = path
     }
     
-    init (resourceID: String) {
+    public init (resourceID: String) {
         self.resourceID = resourceID
     }
     
-    init (path: String, resourceID: String) {
+    public init (path: String, resourceID: String) {
         self.path = path
         self.resourceID = resourceID
     }
