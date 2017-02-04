@@ -42,9 +42,9 @@ private func deserializedValueFromHashValue(hashValue: Any?) -> Any {
     var value = ""
     if hashValue != nil {
         if hashValue is [Any] {
-            return nil // handle array
+            return [] // handle array
         } else if hashValue is [String: Any] {
-            return nil // handle dictionary
+            return [:] // handle dictionary
         } else {
             value = "\(hashValue!)"
         }
