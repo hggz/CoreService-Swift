@@ -12,6 +12,7 @@ import XCTest
 // Test Objects
 class TestModel: CSNetworkObject {
     var numberOfMemes: Int = 69
+    var array: [String]?
     
     override var path: String {
         get { return "meme" }
@@ -117,8 +118,26 @@ class CoreServiceTests: XCTestCase {
         let refl = Mirror(reflecting: objc)
         let superclassMirror = refl.superclassMirror!
         print ("Number of super children: \(superclassMirror.children.count)")
+        // SEARCH FOR TYPE ARRAY
+        var count = UInt32()
+        let properties = class_copyPropertyList(refl.subjectType as! NSObject.Type, &count)
+        var types: [String: String] = [:]
+        for i in 0..<Int(count) {
+            let property: objc_property_t = properties![i]!
+            let name = getNameOf(property: property)
+            let type = getTypeOf(property: property)
+            types[name!] = "\(type)"
+            if (types[name!]?.contains("NSArray"))! {
+                print("\(name!) is NSARRAY!")
+            }
+        }
+        free(properties)
+        print (types)
+        
+        // END ARRAY TEST
         for child in superclassMirror.children {
             print ("Property: '\(child.label!)' Value: '\(child.value)'")
+            print ("FOUND: \(type(of: child.value))")
 //            objc.setValue("2pac", forKey: child.label!)
             objc.setValuesForKeys([child.label!: "2pac"])
         }
