@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 public func pathForNetworkConfig(config: CSNetworkConfig, path: String) -> CSNetworkPath {
     return "\(config.baseUrl)/\(path)"
@@ -37,6 +38,15 @@ public func deserializeReturnObjectIntoNetworkObject(networkObject: CSNetworkObj
             let value = deserializedValueFromHashValue(hashValue: objectHash[property])
             networkObject.setValue(value, forKey: property)
         }
+    }
+}
+
+public func serializeManageObject(networkObject: CSNetworkObject, managedObject: NSManagedObject) { 
+    let reflection = Mirror(reflecting: networkObject)
+    for child in reflection.children {
+        let property = child.label!
+        let value = child.value
+        managedObject.setValue(value, forKey: property)
     }
 }
     
