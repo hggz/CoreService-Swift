@@ -41,12 +41,14 @@ public func deserializeReturnObjectIntoNetworkObject(networkObject: CSNetworkObj
     }
 }
 
-public func serializeManageObject(networkObject: CSNetworkObject, managedObject: NSManagedObject) { 
+public func serializeManageObject(networkObject: CSNetworkObject, managedObject: NSManagedObject) {
     let reflection = Mirror(reflecting: networkObject)
     for child in reflection.children {
         let property = child.label!
-        let value = child.value
-        managedObject.setValue(value, forKey: property)
+        if !propertyIsArray(property, object: reflection.subjectType as! NSObject.Type) {
+            let value = child.value
+            managedObject.setValue(value, forKey: property)
+        }
     }
 }
     
